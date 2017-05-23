@@ -1,0 +1,90 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>NoteBook</title>
+        <!--加入移动端适应-->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./stylesheets/animate.min.css">
+        <link rel="stylesheet" href="./stylesheets/noteBook.css">
+        <script src="./javascripts/jquery.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./javascripts/noteBook.js"></script>
+        <script src="./javascripts/index.js"></script>   
+    </head>
+    <body>
+		<div id="log" class="jumbotron">
+			<div class="container">
+				<div>
+					<h1>NoteBook <small>——最简洁的网络笔记本</small></h1>
+				</div>
+				<div>
+					<h3 class="hidden-xs">美好的生活需要沉淀<small>让我们开始吧！</small></h3>
+				</div>
+				<div id="flashInformation">
+					<% if(success) { %>
+						<div class="flashInformation" success='<%= success %>'><%= success %></div>
+						<% } %>
+					<% if (error) {%>
+						<div class="flashInformation"  success='<%= success %>'><%= error %> </div>
+						<% } %>
+				</div>
+				<% if (user) { %>
+					<div id="indexLoginInformation" class="col-lg-3 col-md-3 col-sm-4" style="border:1px solid; box-shadow: 0 0 5px #999; border-radius:4px; margin-top:25px;">
+						<span class="glyphicon glyphicon-user">:</span>
+						<span class="hidden-xs">&nbsp;</span>
+						<span><%= user.email %></span>
+						<span>&nbsp;</span>
+						<span><a id="logout" title="退出" href="./logout" class="glyphicon glyphicon-log-out">退出</a></span>
+						<span class="hidden-xs">&nbsp;</span>
+						<span><a id="postArticle" title="点击进入笔记本" href="./note" class="glyphicon glyphicon-book">进入笔记</a></span>
+					</div>
+					<div>
+						
+					</div>
+				<% } else { %>
+					<div class="col-lg-3 col-md-3 col-sm-4" style="border:1px solid; box-shadow: 0 0 5px #999; border-radius:4px; margin-top:30px;">
+						<form id="login" method="post" class="form-horizontal" action="login">
+						<div style="margin:0 10px";>
+							<h3>登录</h3>
+							<div class="form-group">
+								<input name="email" type="email" class="form-control" placeholder="电子邮件">
+								<div class="reminder">用户名不存在或密码错误</div>
+							</div>
+							<div class="form-group help">
+								<input name="password" type="password" class="form-control" placeholder="密　码">
+							</div>
+							<div class="form-group">
+								<input type="submit" class="btn btn-default" value="登录">
+								<a id="regButton" class="pull-right" style="padding-top:10px;" href="javascript:void(0);">注册</a>
+							</div>
+						</div>
+						</form>
+						<form id="reg" method="post" class="form-horizontal" action="/regInformation" name="reg">
+						<div style="margin:0 10px";>
+							<h3>注册</h3>
+							<div class="form-group">
+								<input name="email" type="email" class="form-control" id="regInputName" placeholder="电子邮件" required="required">
+								<div class="reminder">该邮箱已注册</div>
+							</div>
+							<div class="form-group help">
+								<input name="password" type="password" class="form-control" id="regInputPassword" placeholder="密　码" required="required">
+								<div class="reminder">密码应大于5位小于21位</div>
+							</div>
+							<div class="form-group help">
+								<input type="password" class="form-control" id="regInputPasswordAgain" placeholder="确认密码" required="required">
+								<div class="reminder">两次密码不同</div>
+							</div>
+							<div class="form-group">
+								<input id="regSubmit" type="submit" class="btn btn-default" value="注册">
+							</div>
+						</div>
+						</form>
+					</div>
+				<% } %>
+			</div>
+		</div>
+   		<footer>版权所有2017noteBook Corporation。保留所有权利。</footer>
+    </body>
+</html>

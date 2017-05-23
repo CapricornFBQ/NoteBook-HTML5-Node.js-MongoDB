@@ -1,0 +1,165 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>NoteBook</title>
+        <!--加入移动端适应-->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./stylesheets/animate.min.css">
+        <link rel="stylesheet" href="./stylesheets/noteBook.css">
+        <script src="./javascripts/jquery.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./javascripts/noteBook.js"></script>
+        <script src="./javascripts/index.js"></script>   
+    </head>
+    <body>
+ 		<div id="navbar" align="center">
+ 			<div style="height:10px;" class="hidden-xs"></div>
+ 			<div id="NoteBook" style="height:47px;padding-top:13px;">
+ 				<span><strong><em>NoteBook</em></strong></span>
+ 			</div>
+ 			<div style="height:10px;" class="hidden-xs"></div>
+ 			<div style="height:0px;border-bottom:1px solid #ccc;"></div>
+ 			<div style="height:73px;padding-top:25px">
+ 				<div class="navBarBox" align="center" style="width:30px; height:30px; border-radius:15px;">
+ 					<div id="navBarNewNote" style="font-size:18px; padding-top:5px;" class="glyphicon glyphicon-pencil"></div>
+ 				</div>
+ 				<div class="navBarTriangle">
+ 					<span class="glyphicon glyphicon-triangle-left"></span>
+ 				</div>
+ 				<div class="navBarTitle">
+ 					<p>新笔记</p>
+ 				</div>
+ 			</div>
+ 			<div style="height:73px;padding-top:25px">
+ 				<div class="navBarBox" align="center" style="width:30px; height:30px; border-radius:15px;">
+ 					<div id="navBarSearch" style="font-size:18px; padding-top:5px;"  class="glyphicon glyphicon-search"></div>
+ 				</div>
+ 				<div class="navBarTriangle">
+ 					<span class="glyphicon glyphicon-triangle-left"></span>
+ 				</div>
+ 				<div class="navBarTitle">
+ 					<p>搜索</p>
+ 				</div>
+ 			</div>
+ 			<div style="height:73px;padding-top:25px">
+ 				<div class="navBarBox" align="center" style="width:30px; height:30px; border-radius:15px;">
+ 					<div id="navBarTag" style="font-size:18px; padding-top:5px;"  class="glyphicon glyphicon-tags"></div>
+ 				</div>
+ 				<div class="navBarTriangle">
+ 					<span class="glyphicon glyphicon-triangle-left"></span>
+ 				</div>
+ 				<div class="navBarTitle">
+ 					<p>标签</p>
+ 				</div>
+ 			</div>
+ 			<div style="height:73px;padding-top:25px">
+ 				<div class="navBarBox" align="center" style="width:30px; height:30px; border-radius:15px;">
+ 					<div id="navBarNote" style="font-size:18px; padding-top:5px;"  class="glyphicon glyphicon-book"></div>
+ 				</div>
+ 				<div class="navBarTriangle">
+ 					<span class="glyphicon glyphicon-triangle-left"></span>
+ 				</div>
+ 				<div class="navBarTitle">
+ 					<p>全部笔记</p>
+ 				</div>
+ 			</div>
+ 			<div style="height:73px;padding-top:25px">
+ 				<div class="navBarBox" align="center" style="width:30px; height:30px; border-radius:15px;">
+ 					<div id="navBarBasket" style="font-size:18px; padding-top:5px;"  class="glyphicon glyphicon-trash"></div>
+ 				</div>
+ 				<div class="navBarTriangle">
+ 					<span class="glyphicon glyphicon-triangle-left"></span>
+ 				</div>
+ 				<div class="navBarTitle">
+ 					<p>废纸篓</p>
+ 				</div>
+ 			</div>
+			<div id="noteFlashInformation">
+				<% if(success) { %>
+					<span><%= success %></span>
+					<% } %>
+				<% if (error) {%>
+					<span><%= error %> </span>
+					<% } %>
+			</div>
+			<div id="noteUserInformation">
+				<span><%= user.email %></span>
+			</div>
+ 			<div id="user">
+ 				<a href="./logout" class="glyphicon glyphicon-user" style="color:#444;">&nbsp;退出</a>
+ 			</div>
+ 		</div>
+ 		<div id="bodyPart">
+ 			
+ 		</div>
+ 		<div id="notePart">
+			<!--进入note后默认的页面显示-->
+ 			<div id="defaultNoteShow" style="margin-top:25px;margin-left:30px; border-bottom:1px solid #ccc;">
+ 				<div class="input-group col-lg-offset-3 col-lg-6  col-md-offset-3 col-md-6" style="text-align:center;">
+ 					<input type="search" style="width:100%; border:none; outline:none; font-size:30px; background-color:transparent;" aria-describedby="basic-addon2" placeholder="关键字/词">
+ 					<span class="input-group-addon glyphicon glyphicon-search" id="basic-addon2" style="font-size:30px; border:none; outline:none; background-color:transparent; cursor:pointer;"></span>
+ 				</div>
+ 				<span style="font-size:10px;">进行搜索...</span>
+ 			</div>
+			<!--noteCode为最终的新编辑笔记时的代码容器-->
+ 			<div id="noteCode">
+ 				
+ 			</div>
+ 			<div id="showNote" style="padding:15px; display:none;">
+				<!--  平时显示内容的容器-->
+				<div style="padding:0 15px;border-bottom:1px solid #ccc;">
+					<h2 id="showNoteTitle" style="text-align:center;"> </h2>
+					<div style="font-size:9px;">tag: <span id="showNoteTag"> </span></div>
+				</div>
+				<div id="showNoteText" style="padding:15px;">
+					
+				</div>
+ 			</div>
+ 			<div id="fullScreen" title="全屏">
+ 				<span class="glyphicon glyphicon-resize-full"></span>
+ 			</div>
+ 			<div id="newNoteCancel" title="取消输入">
+ 				<span>取消</span>
+ 			</div>
+ 			 <div id="newNoteEnsure" title="保存上传">
+ 				<span>确定</span>
+ 			</div>
+ 		</div>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

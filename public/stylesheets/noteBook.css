@@ -1,0 +1,243 @@
+body {
+    overflow-x: hidden;
+}
+.letUsBegin {
+	margin:0 10px;
+}
+footer {
+	position: absolute;
+	bottom: 3px;
+	text-align: center;
+}
+#login {
+	position: relative;
+}
+#reg {
+	display: none;
+	position: relative;
+}
+.reminder{
+	text-align: center;
+	position: absolute;
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 3px;
+	margin-left: 280px;
+	width: 100%;
+	margin-top: -28px;
+	display: none;
+}
+#navbar {
+	border-right: 1px solid #ccc;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 73px;
+	height: 100%;
+	background-color: #fff;
+	z-index: 8;
+}
+a:hover {
+	text-decoration:none;
+}
+/*
+div {
+	border: 1px solid;
+}
+*/
+.navBarTriangle {
+	position: absolute;
+	margin-left:52px;
+	color: #999;
+	margin-top:-24px;
+	display: none;
+	z-index: 9;
+}
+.navBarTitle {
+	position: absolute;
+	background-color: #999;
+	width: 73px;
+	height: 20px;
+	margin-left:61px;
+	color: #fff;
+	margin-top:-24px;
+	border-radius:3px;
+	display: none;
+	z-index: 10;
+	box-shadow: 0 0 5px #999;
+}
+.navBarBox {
+	background-color: transparent;
+	border: 1px solid #ccc;
+	color: #444;
+	cursor: pointer;
+}
+.navBarBox:hover {
+	background-color:rgba(0,0,0,0.4);
+	color: #FFF;
+}
+#bodyPart {
+	position: absolute;
+	left: 73px;
+	top: 0;
+	z-index: 7;
+	background-color:#fff;
+	box-shadow: 0 0 5px #999;
+}
+#notePart {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	z-index: 6;
+}
+#user {
+	border: 1px solid #DDD;
+	position: absolute;
+	bottom: 5px;
+	left: 3px;
+	border-radius: 3px;
+	cursor: pointer;
+	padding: 0 4px;
+}
+#noteFlashInformation {
+	display: none;
+	background-color: rgba(0,0,0,0.2);
+	position: absolute;
+	bottom: 30px;
+	text-align: center;
+	left: 6px;
+	border-radius: 3px;
+	width: 100%;
+}
+#user:hover {
+	background-color:rgba(0,0,0,0.2);
+	color: #444;
+}
+#flashInformation {
+	position: absolute;
+	display: none;
+	text-align: center;
+	font-size: 15px;
+	width: 285px;
+	height: 20px;
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 3px;
+}
+#indexLoginInformation {
+	text-align: center;
+}
+#noteUserInformation {
+	display: none;
+	width: 180px;
+	text-align: center;
+	background-color: rgba(0,0,0,0.2);
+	position: absolute;
+	bottom: 30px;
+	left: 3px;
+	border-radius: 3px;
+	z-index: 8;
+}
+#fullScreen {
+	text-align: center;
+	color: #555;
+	position: absolute;
+	border: 1px solid #555;
+	border-radius: 4px;
+	width: 20px;
+	height: 20px;
+	top: 3px;
+	right: 3px;
+	box-shadow: 0 0 5px #999;
+	font-size: 16px;
+	display: none;
+}
+#newNoteCancel {
+	font-size: 16px;
+	text-align: center;
+	position: absolute;
+	border: 1px solid #555;
+	border-radius: 4px;
+	color: #555;
+	width: 45px;
+	top: 45px;
+	right: 15px;
+	box-shadow: 0 0 5px #999;
+	cursor: pointer;
+	display: none;
+}
+#newNoteCancel:hover {
+	background-color: rgba(0,0,0,0.4);
+	color: #FFF;
+}
+#newNoteEnsure {
+	font-size: 16px;
+	text-align: center;
+	position: absolute;
+	border: 1px solid #555;
+	border-radius: 4px;
+	color: #555;
+	width: 45px;
+	top: 45px;
+	right: 15px;
+	box-shadow: 0 0 5px #999;
+	cursor: pointer;
+	display: none;
+}
+#newNoteEnsure:hover {
+	background-color: rgba(0,0,0,0.4);
+	color: #FFF;
+}
+#fullScreen:hover {
+	background-color: rgba(0,0,0,0.6);
+	color: #fff;
+}
+.noteBrief {
+	padding-left:10px; 
+	padding-right:10px;
+	cursor: pointer;
+	position: relative;
+}
+.noteBrief:hover {
+	border: 1px solid #bbb;
+	border-radius: 3px;
+	box-shadow: 0 0 5px #bbb;
+	background-color: #ddd;
+}
+.removeNote {
+	display: none;
+	position: absolute;
+	top:8px;
+	right: 3px;
+	cursor: pointer;
+	height: 21px;
+	width: 21px;
+}
+.removeNote:hover {
+	border: 1px solid #444;
+	border-radius: 3px;
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: 0 0 5px #999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

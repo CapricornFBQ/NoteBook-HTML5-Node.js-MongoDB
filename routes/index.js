@@ -163,7 +163,7 @@ module.exports = function(app) {
       })
     });
   });
-  //想浏览器输出标签页===============================================================================================================================
+  //向浏览器输出标签页===============================================================================================================================
   app.get('/noteTag', checkLogin);
   app.get('/noteTag', function(req, res) {
     //需要先判断是否为第一页，并把请求的页数转化为number类型
@@ -189,6 +189,46 @@ module.exports = function(app) {
           total: total,             //总文档数
           user: req.session.user,
           tags: tags,  
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+          });
+      });
+    });
+  })
+  //向浏览器输出对应标签下的目录======================================================================================================================
+  app.get('/noteTagMenu', checkLogin);
+  app.get('/noteTagMenu', function(req, res) {
+    var tag = req.query.tag;
+    console.log(tag);
+    //需要先判断是否为第一页，并把请求的页数转化为number类型
+    //如果req.query.p未定义，则page=1
+    var currentpage = req.query.p ? parseInt(req.query.p) : 1;
+    //定义查询条件tag为“coding”
+    var email = req.session.user.email;
+    var skip = 8 * (currentpage - 1);
+    Note.count({"email":email, "tag":tag}, function(err, total) {
+      if (err) {
+        notes = [];
+      }
+      //查询并返回第page页的五篇文章 !!!!!同时只显示coding标签的内容
+      Note.find({"email":email, "tag":tag}).skip(skip).limit(8).sort({_id: -1}).exec(function (err, notes) {
+        if (err) {
+          notes = [];
+        }
+        console.log(notes);
+        //数据转化为markdown格式；
+        notes.forEach(function(doc) {
+            if (doc) {
+                doc.note = markdown.toHTML(doc.note);
+            }
+        });
+        var pagesize = 8;
+        res.render('noteTagMenu', {
+          currentpage: currentpage, //当前页码
+          pagesize: pagesize,       //每一页的显示数
+          total: total,             //总文档数
+          user: req.session.user,
+          notes: notes,  
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
           });

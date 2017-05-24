@@ -1,0 +1,71 @@
+<div id="Basket" style="width:100%;">
+	<div  style="padding-top:15px;">
+		<div style="padding-bottom:5px; border-bottom:1px solid #ccc; text-align:center;">
+			<h2>废纸篓<small>&nbsp;共<%= total%>篇</small></h2>
+		</div>
+		<% notes.forEach(function (note, allNotes) { %>
+		<div class="noteBrief" style="border-bottom:1px solid #ccc;">
+			<h4 noteTag="<%= note.tag %>" noteText="<%- note.note %>"><%= note.title%></h4>
+			<div class="completelyRemoveNote" noteId="<%= note._id%>" align='center'>
+				<div style="font-size:15px; line-height: 21px;">彻底删除</div>
+			</div>
+			<div class="restoreNote" noteId="<%= note._id%>" align='center'>
+				<div style="font-size:15px; line-height: 21px;">还原</div>
+			</div>
+			<p class="info" style="font-size:8px;">
+				<span class="glyphicon glyphicon-time">:<%= note.time.minute%></span> 
+			</p>
+			<div class="note" style="font-size:12px; width: 100%; overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
+				<%- note.note %>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+	<%console.log(total, pagesize, currentpage)%>
+	<%- include components/basketPage {total:total, pagesize:pagesize, currentpage:currentpage}%>
+	<script>
+		//定义删除图标的显示与隐藏功能==============================================
+		$('.noteBrief').mouseenter(function() {
+			$(this).children().eq(1).fadeIn(300);
+			$(this).children().eq(2).fadeIn(300);
+		})
+		$('.noteBrief').mouseleave(function() {
+			$(this).children().eq(1).hide();
+			$(this).children().eq(2).hide();
+		})
+		//定义彻底删除功能=========================================================
+		$('.completelyRemoveNote').click(function() {
+			var body = {
+				noteId : $(this).attr('noteId')
+			}
+			$.post('/completelyRemoveNote', body);
+			$(this).parent().fadeOut();
+		})
+		//定义还原功能=============================================================
+		$('.restoreNote').click(function() {
+			var body = {
+				noteId : $(this).attr('noteId')
+			}
+			$.post('/restoreNote', body)
+			$(this).parent().fadeOut();
+		})
+	</script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

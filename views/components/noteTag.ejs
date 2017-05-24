@@ -1,4 +1,4 @@
-<div class='container'>
+<div style="width:100%">
     <nav>
         <div class="text-center">
             <ul class="pagination" id="pagination" >
@@ -25,7 +25,7 @@
                     //如果大于一页的内容
                     if(total > pagesize) {
                         if(currentpage > 1) { //如果当前页大于1，则显示“上一页”按钮
-                            pagehtml += `<li><a class="codingPage${currentpage-1}" href="javascript:void(0);" p="p=${currentpage-1}">
+                            pagehtml += `<li><a class="noteTag" href="javascript:void(0);" p="p=${currentpage-1}">
                                 <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
                                 <span aria-hidden="true" class="glyphicon glyphicon-option-horizontal"></span>
                             </a></li>`;
@@ -35,16 +35,16 @@
                             if(i > (currentpage - 3) && i <= (currentpage + 3)) {
                                 //如果i为当前页，那么直接显示为active类
                                 if( i == currentpage) {
-                                    pagehtml += `<li class="active"><a class="codingPage${i}" href="javascript:void(0);" p="p=${i}">${i}</a></li>`;
+                                    pagehtml += `<li class="active"><a class="noteTag" href="javascript:void(0);" p="p=${i}">${i}</a></li>`;
                                 }else {
                                     //其他的li则显示为普通类
-                                    pagehtml += `<li><a class="codingPage${i}" href="javascript:void(0);" p="p=${i}">${i}</a></li>`;
+                                    pagehtml += `<li><a class="noteTag" href="javascript:void(0);" p="p=${i}">${i}</a></li>`;
                                 }
                             }
                         }
                         if(currentpage < counts) {
                             //如果当前页码小于总页数,则必须显示下一页链接
-                            pagehtml += `<li><a class="codingPage${currentpage+1}"  href="javascript:void(0);" p="p=${currentpage+1}">
+                            pagehtml += `<li><a class="noteTag"  href="javascript:void(0);" p="p=${currentpage+1}">
                                 <span aria-hidden="true" class="glyphicon glyphicon-option-horizontal"></span>
                                 <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
                             </a></li>`;

@@ -4,7 +4,7 @@
 			<h2>笔记<small>&nbsp;共<%= total%>篇</small></h2>
 		</div>
 		<% notes.forEach(function (note, allNotes) { %>
-		<div class="noteBrief" style="border-bottom:1px solid #ccc; border-top:1px solid #fff;">
+		<div class="noteBrief" style="border-bottom:1px solid #ccc;">
 			<h4 noteTag="<%= note.tag %>" noteText="<%- note.note %>"><%= note.title%></h4>
 			<div class="removeNote" noteId="<%= note._id%>" align='center' title="扔入废纸篓">
 				<div class="glyphicon glyphicon-trash" style="font-size:15px; margin-top:3px"></div>
@@ -19,7 +19,7 @@
 		<% }) %>
 	</div>
 	<%console.log(total, pagesize, currentpage)%>
-	<%- include components/page {total:total, pagesize:pagesize, currentpage:currentpage}%>
+	<%- include components/allNotesPage {total:total, pagesize:pagesize, currentpage:currentpage}%>
 	<script>
 		//定义删除图标的显示与隐藏功能==============================================
 		$('.noteBrief').mouseenter(function() {
@@ -30,19 +30,28 @@
 		})
 		//定义noteCode区初始显示的文章==============================================
 		$(function() {
-			$('#showNoteTitle').html($('#allNoteTitle1').html());
-			$('#showNoteTag').html($('#allNoteTitle1').attr('noteTag'));
-			$('#showNoteText').html($('#allNoteTitle1').attr('noteText'));
+			$('.noteBrief').eq(0).addClass('noteBriefActive');
+			$('#showNoteTitle').html($('.noteBrief').eq(0).children().eq(0).html());
+			$('#showNoteTag').html($('.noteBrief').eq(0).children().eq(0).attr('noteTag'));
+			$('#showNoteText').html($('.noteBrief').eq(0).children().eq(0).attr('noteText'));
 			$('#showNote').fadeIn(300);
 		})
 		//定义点击事件时，noteCode区显示笔记功能======================================
 		$('.noteBrief').click(function() {
+			$('.noteBrief').not(this).removeClass('noteBriefActive');
+			$(this).addClass('noteBriefActive');
 			$('#showNoteTitle').html($(this).children().eq(0).html());
 			$('#showNoteTag').html($(this).children().eq(0).attr('noteTag'));
 			$('#showNoteText').html($(this).children().eq(0).attr('noteText'));
 		})
 		//定义笔记扔入废纸篓的功能====================================================
-		$()
+		$('.removeNote').click(function() {
+			var body= {
+				noteId:$(this).attr('noteId')
+			}
+			$.post('/pullNoteBasket', body);
+			$(this).parent().fadeOut(300);
+		})
 		
 	</script>
 </div>

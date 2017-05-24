@@ -1,0 +1,85 @@
+<div id="noteTag" style="width:100%;">
+	<div  style="padding-top:15px;">
+		<div style="padding-bottom:5px; border-bottom:1px solid #ccc; text-align:center;">
+			<h2>标签<small>&nbsp;共<%= total%>条</small></h2>
+		</div>
+		<%var i = 1%>
+		<% tags.forEach(function (tag, allNotes) { %>
+		<div class="noteBrief" style="border-bottom:1px solid #ccc; height:24px;">
+			<div style="display:inline; margin:4px 15px;">
+				<span style="font-size:16px;"><%= i%>:</span>
+			</div>
+			<p noteTag="<%= tag.tag %>" style="display:inline; margin:4px; font-size:16px;"><%= tag.tag%></p>
+			<div class="noteTagMenuDown" title="展开">
+				<span class="glyphicon glyphicon-menu-down" style="font-size:16px;"></span>
+			</div>
+			<div class="noteTagMenuUp" title="收回">
+				<span class="glyphicon glyphicon-menu-up" style="font-size:16px;"></span>
+			</div>
+			<div class="removeNoteTag" tagId="<%= tag._id%>" align='center' title="删除标签及笔记">
+				<div class="glyphicon glyphicon-trash" style="font-size:14px; margin-top:3px"></div>
+			</div>
+			<div class="noteTagBrief">
+				
+			</div>
+		</div>
+		<% i ++%>
+		<% }) %>
+	</div>
+	<%console.log(total, pagesize, currentpage)%>
+	<%- include components/allNotesPage {total:total, pagesize:pagesize, currentpage:currentpage}%>
+	<script>
+		//定义删除图标以及展开收回图标的显示与隐藏功能==============================================
+		$('.noteBrief').mouseenter(function() {
+			$(this).children().eq(2).fadeIn(300);
+			$(this).children().eq(4).fadeIn(300);
+		})
+		$('.noteBrief').mouseleave(function() {
+			$(this).children().eq(2).hide();
+			$(this).children().eq(4).hide();
+		})
+		//定义noteCode区初始显示的文章==============================================
+//		$(function() {
+//			$('.noteBrief').eq(0).addClass('noteBriefActive');
+//			$('#showNoteTitle').html($('.noteBrief').eq(0).children().eq(0).html());
+//			$('#showNoteTag').html($('.noteBrief').eq(0).children().eq(0).attr('noteTag'));
+//			$('#showNoteText').html($('.noteBrief').eq(0).children().eq(0).attr('noteText'));
+//			$('#showNote').fadeIn(300);
+//		})
+		//定义点击事件时，noteCode区显示笔记功能======================================
+		$('.noteBrief').click(function() {
+			$('.noteBrief').not(this).removeClass('noteBriefActive');
+			$(this).addClass('noteBriefActive');
+			$('#showNoteTitle').html($(this).children().eq(0).html());
+			$('#showNoteTag').html($(this).children().eq(0).attr('noteTag'));
+			$('#showNoteText').html($(this).children().eq(0).attr('noteText'));
+		})
+		//定义笔记扔入废纸篓的功能====================================================
+		$('.removeNote').click(function() {
+			var body= {
+				noteId:$(this).attr('noteId')
+			}
+			$.post('/pullNoteBasket', body);
+			$(this).parent().fadeOut(300);
+		})
+		
+	</script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

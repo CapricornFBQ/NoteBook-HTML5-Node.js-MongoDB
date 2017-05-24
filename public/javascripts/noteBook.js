@@ -19,13 +19,13 @@ $(function() {
     //定义导航栏选项中，鼠标点击之后的效果==========================================================================
     $('.navBarBox').click(function() {
         $(this).css({
-            'background-color':'rgba(0,0,0,0.4)',
+            'background-color':'rgba(0,0,0,0.7)',
 	        'color': '#FFF'
         })
         $('.navBarBox').not(this).css({
             'background-color': 'transparent',
             'border': '1px solid #ccc',
-            'color': '#444',
+            'color': '#333',
         })
     })
     //定义note中显示用户信息的动作==================================================================================
@@ -53,6 +53,7 @@ $(function() {
             var bodyPartWidth = $('#bodyPart').width();
             $('#notePart').css({'width':(screenWidth - 73 - bodyPartWidth) + 'px'});   
     })
+    //导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////
     //定义点击navBarNewNote事件，bodyPart动画显示，以及notePart动画缩小===============================================
     $('#navBarNewNote').click(function() {
         $.get('/newNote', function(data) {
@@ -68,7 +69,7 @@ $(function() {
         var bodyPartWidth = $('#bodyPart').width();
         $('#notePart').animate({'width':screenWidth}, 300, function() {
             if(bodyPartWidth > 0) {
-                $('#bodyPart').children().fadeOut(100);
+                $('#bodyPart').fadeOut(100);
                 $('#bodyPart').animate({'width': 0}, 300, function() {
                     $('#newNoteCancel').fadeIn(300);
                     $('#navbar').animate({'width': 0}, 300);
@@ -127,6 +128,7 @@ $(function() {
             })
         }
     })
+    //导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////search//
     //定义点击navBarSearch事件，bodyPart动画显示，以及notePart动画缩小================================================
     $('#navBarSearch').click(function() {
         $('#defaultNoteShow').fadeOut(500);
@@ -145,25 +147,32 @@ $(function() {
             $('#fullScreen').fadeIn(300);
         });
     })
+    //导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签//
     //定义点击navBarTag事件，bodyPart动画显示，以及notePart动画缩小===================================================
     $('#navBarTag').click(function() {
-        $('#defaultNoteShow').fadeOut(500);
-        //每次点击之后，确保导航栏的图标提示消失
-        $('.navBarTriangle').fadeOut(200);
-        $('.navBarTitle').fadeOut(200);
-        $('#bodyPart').css({'height':screenHeight,});
-        if (screenWidth >= 480) {
-            bodyPartWidth = '380px';
-        } else {
-            bodyPartWidth = (screenWidth - 100) + 'px';
-        }
-        $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
-            var bodyPartWidth = $('#bodyPart').width();
-            $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100); 
-            $('#fullScreen').fadeIn(300); 
-        }); 
+        $('#showNote').hide();
+        $.get('/noteTag', function(data) {
+            $('#bodyPart').hide().html(data);
+            $('#defaultNoteShow').fadeIn(500);
+            //每次点击之后，确保导航栏的图标提示消失
+            $('.navBarTriangle').fadeOut(200);
+            $('.navBarTitle').fadeOut(200);
+            $('#bodyPart').css({'height':screenHeight,});
+            if (screenWidth >= 480) {
+                bodyPartWidth = '380px';
+            } else {
+                bodyPartWidth = (screenWidth - 100) + 'px';
+            }
+            $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+                var bodyPartWidth = $('#bodyPart').width();
+                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100); 
+                $('#fullScreen').fadeIn(300); 
+            }); 
+            $('#bodyPart').fadeIn();
+        })
     })
-    //定义点击navBarNote事件，bodyPart动画显示，以及notePart动画缩小===================================================
+    //导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////
+    //定义点击navBarNote事件，bodyPart动画显示，以及notePart动画缩小,获取全部笔记目录======================================
     $('#navBarNote').click(function() {
         $.get('/allNotes', function(data) {
             $('#defaultNoteShow').fadeOut(300, function() {
@@ -186,23 +195,51 @@ $(function() {
             });
         })
     })
+    //定义全部笔记目录中的翻页事件========================================================================================
+    $(Document).on('click','.allNotesPage', function() {
+        var page = $(this).attr('p');
+        $.get('/allNotes',page, function(data) {
+            $('#defaultNoteShow').fadeOut(300, function() {
+                $('#bodyPart').fadeOut(300,function() {
+                    $(this).html(data).fadeIn(300);
+                });
+            });
+        })
+    })
+    //导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////basket////
     //定义点击废纸篓事件，bodyPart动画显示，以及notePart动画缩小==========================================================
     $('#navBarBasket').click(function() {
-        $('#defaultNoteShow').fadeOut(500);
-        //每次点击之后，确保导航栏的图标提示消失
-        $('.navBarTriangle').fadeOut(200);
-        $('.navBarTitle').fadeOut(200);
-        $('#bodyPart').css({'height':screenHeight,});
-        if (screenWidth >= 480) {
-            bodyPartWidth = '380px';
-        } else {
-            bodyPartWidth = (screenWidth - 100) + 'px';
-        }
-        $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
-            var bodyPartWidth = $('#bodyPart').width();
-            $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
-            $('#fullScreen').fadeIn(300); 
-        });
+        $('#showNote').hide();
+        $.get('/basket', function(data) {
+            $('#bodyPart').hide().html(data);
+            $('#defaultNoteShow').fadeIn(500);
+            //每次点击之后，确保导航栏的图标提示消失
+            $('.navBarTriangle').fadeOut(200);
+            $('.navBarTitle').fadeOut(200);
+            $('#bodyPart').css({'height':screenHeight,});
+            if (screenWidth >= 480) {
+                bodyPartWidth = '380px';
+            } else {
+                bodyPartWidth = (screenWidth - 100) + 'px';
+            }
+            $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+                var bodyPartWidth = $('#bodyPart').width();
+                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
+                $('#fullScreen').fadeIn(300); 
+            });
+            $('#bodyPart').fadeIn();
+        })
+    })
+    //定义废纸篓目录中的翻页事件========================================================================================
+    $(Document).on('click','.basketPage', function() {
+        $('#showNote').hide();
+        var page = $(this).attr('p');
+        $.get('/basket',page, function(data) {
+            $('#defaultNoteShow').fadeIn(500);
+            $('#bodyPart').fadeOut(300,function() {
+                $(this).html(data).fadeIn(300);
+            });
+        })
     })
     //定义点击全屏按钮事件，及其动画=====================================================================================
     $('#fullScreen').click(function() {

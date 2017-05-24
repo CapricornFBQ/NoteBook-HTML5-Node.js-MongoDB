@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 //声明一个数据库 对象
-var bracketSchema = new Schema({
+var basketSchema = new Schema({
     email: String,
     time: {
         date:String,
@@ -16,4 +16,4 @@ var bracketSchema = new Schema({
     note:String,
 });
 //暴露数据模型
-module.exports = mongoose.model('bracket', bracketSchema);
+module.exports = mongoose.model('basket', basketSchema);

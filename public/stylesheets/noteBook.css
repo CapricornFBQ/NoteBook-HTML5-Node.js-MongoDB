@@ -214,15 +214,17 @@ div {
 	box-shadow: 0 0 5px #999;
 }
 .noteTagBrief {
+	margin-top: 5px;
+	border: 1px solid #666;
+	border-radius: 4px;
 	padding-left:10px; 
 	padding-right:10px;
 	cursor: pointer;
 	position: relative;
 }
 .noteTagBrief:hover {
-	border: 1px solid #666;
-	border-radius: 4px;
 	box-shadow: 0 0 5px #999;
+	background-color: #ddd;
 }
 .removeNote {
 	display: none;

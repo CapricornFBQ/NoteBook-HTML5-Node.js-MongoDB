@@ -172,6 +172,28 @@ $(function() {
             $('#bodyPart').fadeIn();
         })
     })
+    //标签页全部标签翻页功能============================================================================================
+    $(Document).on('click','.noteTagPage', function() {
+        var page = $(this).attr('p');
+        $.get('/noteTag',page, function(data) {
+            $('#defaultNoteShow').fadeOut(300, function() {
+                $('#bodyPart').fadeOut(300,function() {
+                    $(this).html(data).fadeIn(300);
+                });
+            });
+        })
+    })
+    //定义单个标签内笔记的翻页功能=======================================================================================
+    $(Document).on('click','.noteTagMenuPage', function() {
+        var page = $(this).attr('p');
+        $.get('/noteTag',page, function(data) {
+            $('#defaultNoteShow').fadeOut(300, function() {
+                $('#noteTagBrief').fadeOut(300,function() {
+                    $(this).html(data).fadeIn(300);
+                });
+            });
+        })
+    })
     //导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////
     //定义点击navBarNote事件，bodyPart动画显示，以及notePart动画缩小,获取全部笔记目录======================================
     $('#navBarNote').click(function() {

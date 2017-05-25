@@ -10,10 +10,10 @@
 				<span style="font-size:16px;">标签：<%= i%>:</span>
 			</div>
 			<p noteTag="<%= tag.tag %>" style="display:inline; margin:4px; font-size:16px;"><%= tag.tag%></p>
-			<div class="noteTagMenuDown" title="展开目录" tag="<%= tag.tag%>">
+			<div class="noteTagMenuDown" title="展开笔记" tag="<%= tag.tag%>">
 				<span class="glyphicon glyphicon-menu-down" style="font-size:16px;"></span>
 			</div>
-			<div class="noteTagMenuUp" title="收起目录">
+			<div class="noteTagMenuUp" title="收起笔记">
 				<span class="glyphicon glyphicon-menu-up" style="font-size:16px;"></span>
 			</div>
 			<div class="removeNoteTag" tagId="<%= tag._id%>" tag="<%= tag.tag%>" align='center' title="删除标签及笔记" data-toggle="modal" data-target="#myModal">
@@ -32,31 +32,33 @@
 		var activeRemoveNoteClass;
 		//定义删除图标以及展开收回图标的显示与隐藏功能==============================================
 		$('.noteTagBrief').mouseenter(function() {
-			$(this).children().eq(4).fadeIn(300);
+			$(this).children().eq(4).show();
 		})
 		$('.noteTagBrief').mouseleave(function() {
 			$(this).children().eq(4).hide();
 		})
 		//定义展开标签功能======================================================================
 		$('.noteTagMenuDown').click(function() {
-			$(this).fadeOut(300, function() {
-				$(this).next().fadeIn(300);
+			$(this).fadeOut(100, function() {
+				$(this).next().fadeIn(100);
 			})
 			var obj = $(this).parent();
 			var body= {
 				tag: $(this).attr('tag')
 			}
-			$('.noteTagBrief').fadeOut(300, function() {
-				obj.fadeIn(300, function() {
-					$.get('/noteTagMenu', body, function(data) {
-						if(data) {
-							$('#defaultNoteShow').fadeOut(300, function() {
-								$('#noteTagBrief').html(data).fadeIn(300);
+			//这里是个难点！！！Ajax请求必须放在外部，不然会导致访问多次服务器！！！！！
+			$.get('/noteTagMenu', body, function(data) {
+				$('#pagination').fadeOut(100, function() {
+					$('.noteTagBrief').fadeOut(100, function() {
+						obj.fadeIn(100, function() {
+							$('#defaultNoteShow').fadeOut(100, function() {
+								$('#noteTagBrief').html(data).fadeIn(100);
 							});
-						}
-					})
-				})
-			});
+						})
+					});
+				});
+			})
+
 		})
 		//定义点击删除图标时，向模态框传入tag值功能===================================================
 		$('.removeNoteTag').click(function() {
@@ -81,11 +83,15 @@
 		})
 		//定义标签下笔记目录的收起功能================================================================
 		$('.noteTagMenuUp').click(function() {
-			$(this).fadeOut(300, function() {
-				$(this).prev().fadeIn(300);
+			$(this).fadeOut(100, function() {
+				$(this).prev().fadeIn(100);
 			})
-			$('#noteTagBrief').fadeOut(300, function() {
-				$('.noteTagBrief').fadeIn(300);
+			$(this).parent().fadeOut(100);
+			$('#noteTagBrief').fadeOut(100, function() {
+				$('#noteTagBrief').children().remove();
+				$('.noteTagBrief').fadeIn(100, function() {
+					$('#pagination').fadeIn(100);
+				});
 			})
 		})
 	</script>

@@ -158,8 +158,8 @@ module.exports = function(app) {
           };
         });
       }
-      req.flash('success', '发布成功！');
-      return res.send({"result": true, "flashInformation":'发布成功！'});
+      req.flash('success', '成功存入笔记！');
+      return res.send({"result": true, "flashInformation":'成功存入笔记！'});
       })
     });
   });

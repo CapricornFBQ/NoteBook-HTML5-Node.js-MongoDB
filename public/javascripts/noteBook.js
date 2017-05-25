@@ -114,6 +114,7 @@ $(function() {
             }
             $.post('/newNoteInformation', body, function(data) {
                 if(data.result) {
+                    $('#noteFlashInformation').hide().html(data.flashInformation).fadeIn(300).delay(3000).fadeOut(300);
                     $('#noteCode').children().fadeOut(200, function() {
                         $('#defaultNoteShow').fadeIn(500);
                     })

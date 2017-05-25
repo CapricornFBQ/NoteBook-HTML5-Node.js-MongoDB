@@ -35,19 +35,29 @@
 		})
 		//定义彻底删除功能=========================================================
 		$('.completelyRemoveNote').click(function() {
+			var obj = $(this).parent();
 			var body = {
 				noteId : $(this).attr('noteId')
 			}
-			$.post('/completelyRemoveNote', body);
-			$(this).parent().fadeOut();
+			$.post('/completelyRemoveNote', body, function(data) {
+				if(data.success) {
+					$('#noteFlashInformation').hide().html(data.flashInformation).fadeIn(300).delay(1000).fadeOut(300);
+					obj.fadeOut();
+				}
+			});
 		})
 		//定义还原功能=============================================================
 		$('.restoreNote').click(function() {
+			var obj = $(this).parent();
 			var body = {
 				noteId : $(this).attr('noteId')
 			}
-			$.post('/restoreNote', body)
-			$(this).parent().fadeOut();
+			$.post('/restoreNote', body, function(data) {
+				if(data.success) {
+					$('#noteFlashInformation').hide().html(data.flashInformation).fadeIn(300).delay(1000).fadeOut(300);
+					obj.fadeOut();
+				}
+			})
 		})
 	</script>
 </div>

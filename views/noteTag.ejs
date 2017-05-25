@@ -10,52 +10,18 @@
 				<span style="font-size:16px;">标签：<%= i%>:</span>
 			</div>
 			<p noteTag="<%= tag.tag %>" style="display:inline; margin:4px; font-size:16px;"><%= tag.tag%></p>
-			<div class="noteTagMenuDown" title="展开" tag="<%= tag.tag%>">
+			<div class="noteTagMenuDown" title="展开目录" tag="<%= tag.tag%>">
 				<span class="glyphicon glyphicon-menu-down" style="font-size:16px;"></span>
 			</div>
-			<div class="noteTagMenuUp" title="收回">
+			<div class="noteTagMenuUp" title="收起目录">
 				<span class="glyphicon glyphicon-menu-up" style="font-size:16px;"></span>
 			</div>
-			<div class="removeNoteTag" tagId="<%= tag._id%>" align='center' title="删除标签及笔记" data-toggle="modal" data-target="#myModal">
+			<div class="removeNoteTag" tagId="<%= tag._id%>" tag="<%= tag.tag%>" align='center' title="删除标签及笔记" data-toggle="modal" data-target="#myModal">
 				<div class="glyphicon glyphicon-trash" style="font-size:14px; margin-top:3px"></div>
 			</div>
 		</div>
 		<% i ++%>
 		<% }) %>
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
-<div class="modal-dialog modal-lg" role="document">
-<div class="modal-content eye-protector-processed" style="transition: background-color 0.3s ease; background-color: rgb(193, 230, 198);">
-
-<div class="modal-header eye-protector-processed" style="border-bottom-color: rgba(0, 0, 0, 0.35);">
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-<h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
-</div>
-<div class="modal-body">
-...
-</div>
-</div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
-</div>
-		<!-- Modal -->
-<!--
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">删除确认</h4>
-					</div>
-						<div class="modal-body">
-						该标签及其相关笔记都将不可恢复！确认要删除吗？
-						</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<button type="button" class="btn btn-primary">确认删除</button>
-					</div>
-				</div>
-			</div>
-		</div>
--->
 		<div id="noteTagBrief">
 				
 		</div>
@@ -63,6 +29,7 @@
 	<%console.log(total, pagesize, currentpage)%>
 	<%- include components/noteTagPage {total:total, pagesize:pagesize, currentpage:currentpage}%>
 	<script>
+		var activeRemoveNoteClass;
 		//定义删除图标以及展开收回图标的显示与隐藏功能==============================================
 		$('.noteTagBrief').mouseenter(function() {
 			$(this).children().eq(4).fadeIn(300);
@@ -72,46 +39,55 @@
 		})
 		//定义展开标签功能======================================================================
 		$('.noteTagMenuDown').click(function() {
-			$('.noteTagBrief').not($(this).parent()).fadeOut(300);
 			$(this).fadeOut(300, function() {
 				$(this).next().fadeIn(300);
 			})
+			var obj = $(this).parent();
 			var body= {
 				tag: $(this).attr('tag')
 			}
-			$.get('/noteTagMenu', body, function(data) {
-				if(data) {
-					$('#defaultNoteShow').fadeOut(300, function() {
-						$('#noteTagBrief').html(data).fadeIn(300);
+			$('.noteTagBrief').fadeOut(300, function() {
+				obj.fadeIn(300, function() {
+					$.get('/noteTagMenu', body, function(data) {
+						if(data) {
+							$('#defaultNoteShow').fadeOut(300, function() {
+								$('#noteTagBrief').html(data).fadeIn(300);
+							});
+						}
+					})
+				})
+			});
+		})
+		//定义点击删除图标时，向模态框传入tag值功能===================================================
+		$('.removeNoteTag').click(function() {
+			$('#waitingRemoveNoteTag').html($(this).attr('tag'));
+			activeRemoveNoteClass = $(this).parent();
+		})
+		//定义删除标签及其笔记的功能================================================================
+		$('#removeTagEnsureButton').click(function() {
+			var body = {
+				tag:$('#waitingRemoveNoteTag').html(),
+			}
+			$.post('/RemoveNoteTag', body, function(data) {
+				if(data.success) {
+					$('#noteFlashInformation').hide().html(data.flashInformation).fadeIn(300).delay(1000).fadeOut(300);
+					activeRemoveNoteClass.fadeOut(300, function() {
+						$('#noteTagBrief').fadeOut(function() {
+							$('.noteTagBrief').not(activeRemoveNoteClass).fadeIn(300);
+						})
 					});
 				}
 			})
-		  })
-		//定义noteCode区初始显示的文章===========================================================
-//		$(function() {
-//			$('.noteBrief').eq(0).addClass('noteBriefActive');
-//			$('#showNoteTitle').html($('.noteBrief').eq(0).children().eq(0).html());
-//			$('#showNoteTag').html($('.noteBrief').eq(0).children().eq(0).attr('noteTag'));
-//			$('#showNoteText').html($('.noteBrief').eq(0).children().eq(0).attr('noteText'));
-//			$('#showNote').fadeIn(300);
-//		})
-		//定义点击事件时，noteCode区显示笔记功能===================================================
-		$('.noteBrief').click(function() {
-			$('.noteBrief').not(this).removeClass('noteBriefActive');
-			$(this).addClass('noteBriefActive');
-			$('#showNoteTitle').html($(this).children().eq(0).html());
-			$('#showNoteTag').html($(this).children().eq(0).attr('noteTag'));
-			$('#showNoteText').html($(this).children().eq(0).attr('noteText'));
 		})
-		//定义笔记扔入废纸篓的功能=================================================================
-		$('.removeNote').click(function() {
-			var body= {
-				noteId:$(this).attr('noteId')
-			}
-			$.post('/pullNoteBasket', body);
-			$(this).parent().fadeOut(300);
+		//定义标签下笔记目录的收起功能================================================================
+		$('.noteTagMenuUp').click(function() {
+			$(this).fadeOut(300, function() {
+				$(this).prev().fadeIn(300);
+			})
+			$('#noteTagBrief').fadeOut(300, function() {
+				$('.noteTagBrief').fadeIn(300);
+			})
 		})
-		
 	</script>
 </div>
 

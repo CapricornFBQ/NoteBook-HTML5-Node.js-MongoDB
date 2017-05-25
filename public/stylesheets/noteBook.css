@@ -337,8 +337,14 @@ div {
 	background-color: rgba(0,0,0,0.6);
 	box-shadow: 0 0 5px #999;
 }
-
-
+.modal-backdrop {
+    z-index: 11;
+}
+#ensureButton:hover {
+	box-shadow: 0 0 5px #999;
+	background-color: #444;
+	color: #fff;
+}
 
 
 

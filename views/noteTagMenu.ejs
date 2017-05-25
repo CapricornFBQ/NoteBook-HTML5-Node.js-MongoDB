@@ -46,8 +46,13 @@
 			var body= {
 				noteId:$(this).attr('noteId')
 			}
-			$.post('/pullNoteBasket', body);
-			$(this).parent().fadeOut(300);
+			$.post('/pullNoteBasket', body, function(data) {
+				var obj = $(this).parent();
+				if(data.success) {
+					$('#noteFlashInformation').hide().html(data.flashInformation).fadeIn(300).delay(1000).fadeOut(300);
+					obj.fadeOut(300);
+				}
+			});
 		})
 		
 	</script>

@@ -127,6 +127,24 @@
  				<span>确定</span>
  			</div>
  		</div>
+ 		<!-- Modal 这一部分是bodyPart的内容属于noteTag.ejs的一部分，因为这个模态框必须放在跟目录下，所以放在了note.ejs中 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document" style="z-index:99999;">
+				<div class="modal-content" style="background-color:#ddd; color:#444;">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">删除确认</h4>
+					</div>
+						<div class="modal-body">
+						删除标签<strong>"<span id="waitingRemoveNoteTag"></span>"</strong>及其相关笔记,该操作不可恢复，请确认！
+						</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:transparent;">取消</button>
+						<button id="removeTagEnsureButton" type="button" class="btn btn-primary"style="background-color:transparent; border:1px solid #ccc; color:#444;">确认删除</button>
+					</div>
+				</div>
+			</div>
+		</div>
     </body>
 </html>
 

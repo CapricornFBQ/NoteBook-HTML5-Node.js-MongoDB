@@ -159,7 +159,7 @@ module.exports = function(app) {
         });
       }
       req.flash('success', '发布成功！');
-      return res.send({"result": true});
+      return res.send({"result": true, "flashInformation":'发布成功！'});
       })
     });
   });
@@ -235,6 +235,24 @@ module.exports = function(app) {
       });
     });
   })
+  //彻底删除标签及其标签下的笔记======================================================================================================================
+  app.post('/RemoveNoteTag', checkLogin);
+  app.post('/RemoveNoteTag', function(req, res) {
+    var email = req.session.user.email;
+    var tag = req.body.tag;
+    Tag.remove({"email":email, "tag": tag}, function(err) {
+      if(err) {
+        return err;
+      }
+      Note.remove({"email":email, "tag": tag}, function(err) {
+        if(err) {
+          return err;
+        }
+        req.flash('success', '已删除该标签及相关笔记！');
+        return res.send({"success":true, "flashInformation":'已删除该标签及相关笔记！'});
+      })
+    });
+  })
   //向浏览器输出全部笔记的目录页面=====================================================================================================================
   app.get('/allNotes', checkLogin);
   app.get('/allNotes', function(req, res) {
@@ -299,7 +317,7 @@ module.exports = function(app) {
             return err;
           }
           req.flash('success', '成功扔入废纸篓！');
-          return res.send({"success":true});
+          return res.send({"success":true,"flashInformation":'成功扔入废纸篓！'});
         });
       });
     })
@@ -352,7 +370,7 @@ module.exports = function(app) {
         return err;
       }
       req.flash('success', '已彻底删除！');
-      return res.send({"success":true});
+      return res.send({"success":true,"flashInformation":'已彻底删除！'});
     });
   })
   //定义废纸篓中笔记的还原功能=================================================================================================================
@@ -380,7 +398,7 @@ module.exports = function(app) {
             return err;
           }
           req.flash('success', '已成功还原笔记！');
-          return res.send({"success":true});
+          return res.send({"success":true,"flashInformation":'已成功还原笔记！'});
         });
       });
     })

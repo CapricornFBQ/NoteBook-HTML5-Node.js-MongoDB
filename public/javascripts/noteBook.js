@@ -94,10 +94,6 @@ $(function() {
                 $('#noteCode').hide().html(data).fadeIn(300);
             });
         })
-        var state = {
-            url:"/newNoteWriting"
-        }
-        
         $('#fullScreen').fadeOut(200); 
         var bodyPartWidth = $('#bodyPart').width();
         $('#notePart').animate({'width':screenWidth}, 300, function() {

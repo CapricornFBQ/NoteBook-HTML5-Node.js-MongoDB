@@ -53,6 +53,38 @@ $(function() {
             var bodyPartWidth = $('#bodyPart').width();
             $('#notePart').css({'width':(screenWidth - 73 - bodyPartWidth) + 'px'});   
     })
+    //noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode///
+    //noteCode中默认页面的搜索功能==================================================================================
+    $('#notePart #defaultNoteShow #basic-addon2').click(function() {
+        $.get('/noteSearch', function(data) {
+            $('#bodyPart').hide().html(data);
+            $('#defaultNoteShow').fadeOut(500);
+            //每次点击之后，确保导航栏的图标提示消失
+            $('.navBarTriangle').fadeOut(200);
+            $('.navBarTitle').fadeOut(200);
+            $('#bodyPart').css({'height':screenHeight});
+            if (screenWidth >= 480) {
+                bodyPartWidth = '380px';
+            } else {
+                bodyPartWidth = (screenWidth - 100) + 'px';
+            }
+            $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+                var bodyPartWidth = $('#bodyPart').width();
+                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
+                $('#fullScreen').fadeIn(300);
+            });
+            $('#bodyPart').fadeIn(function() {
+                $('#noteSearchWord').val($('#defaultNoteShow input').val());
+                var body= {
+                    noteSearchWord : $('#defaultNoteShow input').val(),
+                }
+                console.log(body);
+                $.get('/noteSearchByWord', body, function(data) {
+                    $('#noteSearchCode').hide().html(data).fadeIn(300);
+                })
+            });
+        })
+    })
     //导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////
     //定义点击navBarNewNote事件，bodyPart动画显示，以及notePart动画缩小===============================================
     $('#navBarNewNote').click(function() {
@@ -65,6 +97,7 @@ $(function() {
         var state = {
             url:"/newNoteWriting"
         }
+        
         $('#fullScreen').fadeOut(200); 
         var bodyPartWidth = $('#bodyPart').width();
         $('#notePart').animate({'width':screenWidth}, 300, function() {
@@ -132,21 +165,36 @@ $(function() {
     //导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////search//
     //定义点击navBarSearch事件，bodyPart动画显示，以及notePart动画缩小================================================
     $('#navBarSearch').click(function() {
-        $('#defaultNoteShow').fadeOut(500);
-        //每次点击之后，确保导航栏的图标提示消失
-        $('.navBarTriangle').fadeOut(200);
-        $('.navBarTitle').fadeOut(200);
-        $('#bodyPart').css({'height':screenHeight});
-        if (screenWidth >= 480) {
-            bodyPartWidth = '380px';
-        } else {
-            bodyPartWidth = (screenWidth - 100) + 'px';
-        }
-        $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
-            var bodyPartWidth = $('#bodyPart').width();
-            $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
-            $('#fullScreen').fadeIn(300);
-        });
+        $.get('/noteSearch', function(data) {
+            $('#bodyPart').hide().html(data);
+            $('#defaultNoteShow').fadeOut(500);
+            //每次点击之后，确保导航栏的图标提示消失
+            $('.navBarTriangle').fadeOut(200);
+            $('.navBarTitle').fadeOut(200);
+            $('#bodyPart').css({'height':screenHeight});
+            if (screenWidth >= 480) {
+                bodyPartWidth = '380px';
+            } else {
+                bodyPartWidth = (screenWidth - 100) + 'px';
+            }
+            $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+                var bodyPartWidth = $('#bodyPart').width();
+                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
+                $('#fullScreen').fadeIn(300);
+            });
+            $('#bodyPart').fadeIn();
+        })
+    })
+    //对search后的结果翻页的功能====================================================================================
+    $(Document).on('click','.noteSearchByWordPage', function() {
+        var page = $(this).attr('p');
+        $.get('/noteSearchByWord',page, function(data) {
+            $('#defaultNoteShow').fadeOut(300, function() {
+                $('#noteSearchCode').fadeOut(300,function() {
+                    $(this).html(data).fadeIn(300);
+                });
+            });
+        })
     })
     //导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签//
     //定义点击navBarTag事件，bodyPart动画显示，以及notePart动画缩小===================================================
@@ -272,7 +320,7 @@ $(function() {
         var bodyPartWidth = $('#bodyPart').width();
         $('#notePart').animate({'width':(screenWidth - 73) + 'px'}, 500, function() {
             if(bodyPartWidth > 0) {
-                $('#bodyPart').children().fadeOut(100);
+                $('#bodyPart').fadeOut(100);
                 $('#bodyPart').animate({'width': 0}, 200, function() {
                     $('#fullScreen').fadeOut(200); 
                 })

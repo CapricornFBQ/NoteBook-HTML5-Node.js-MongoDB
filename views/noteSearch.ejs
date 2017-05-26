@@ -1,0 +1,46 @@
+<div id="noteSearch" style="width:100%;">
+	<div id="noteSearchShow" style="margin-top:25px;margin-left:30px; border-bottom:1px solid #ccc;">
+		<div class="input-group col-lg-offset-3 col-lg-6  col-md-offset-3 col-md-6" style="text-align:center;">
+			<input id="noteSearchWord" type="search" style="width:100%; border:none; outline:none; font-size:30px; background-color:transparent;" aria-describedby="basic-addon2" placeholder="关键字/词">
+			<span class="input-group-addon glyphicon glyphicon-search" id="basic-addon2" style="font-size:30px; border:none; outline:none; background-color:transparent; cursor:pointer;"></span>
+		</div>
+		<span style="font-size:10px;">进行搜索...</span>
+	</div>
+	<div id="noteSearchCode">
+		
+	</div>
+	<script>
+		$('#basic-addon2').click(function() {
+			var body= {
+				noteSearchWord : $('#noteSearchWord').val(),
+			}
+			$.get('/noteSearchByWord', body, function(data) {
+				$('#noteSearchCode').hide().html(data).fadeIn(300);
+			})
+		})
+	</script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

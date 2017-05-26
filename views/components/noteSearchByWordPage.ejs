@@ -1,0 +1,60 @@
+<div style="width:100%">
+    <nav>
+        <div class="text-center">
+            <ul class="pagination" id="pagination" >
+            <!--在global.js中对分页内容进行定义-->
+            </ul>
+        </div>
+        <script>
+            (function(){
+                //对分页页码进行显示控制
+                //total: 总文档数  pagesize: 单页显示数 currentpage:当前显示页码 
+                if(document.getElementById('pagination')){  //选中对应的id
+                    var total = <%= total %>;
+                    var pagesize = <%= pagesize %>;
+                    var currentpage = <%= currentpage %>;
+                    var counts, pagehtml = ""; //定义总页数 和 页码显示区元素
+                    console.log(total, pagesize, currentpage);
+                    if(total%pagesize == 0){
+                        counts = parseInt(total/pagesize);
+                    }else {
+                        counts = parseInt(total/pagesize) + 1;
+                    }
+                    //如果只有一页的内容
+                    if(total <= pagesize) {pagehtml = "";} //如果只有一页内容，那么页码显示区不显示任何东西
+                    //如果大于一页的内容
+                    if(total > pagesize) {
+                        if(currentpage > 1) { //如果当前页大于1，则显示“上一页”按钮
+                            pagehtml += `<li><a class="noteSearchByWordPage" href="javascript:void(0);" p="p=${currentpage-1}">
+                                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+                                <span aria-hidden="true" class="glyphicon glyphicon-option-horizontal"></span>
+                            </a></li>`;
+                        }  //同时对其他的页码进行显示，并区分当前页为active页码
+                        for(var i = 1; i<= counts; i++) {
+                            //如果为当前页的前面三个和后面两个，则依次显示li元素
+                            if(i > (currentpage - 3) && i <= (currentpage + 3)) {
+                                //如果i为当前页，那么直接显示为active类
+                                if( i == currentpage) {
+                                    pagehtml += `<li class="active"><a class="noteSearchByWordPage" href="javascript:void(0);" p="p=${i}">${i}</a></li>`;
+                                }else {
+                                    //其他的li则显示为普通类
+                                    pagehtml += `<li><a class="noteSearchByWordPage" href="javascript:void(0);" p="p=${i}">${i}</a></li>`;
+                                }
+                            }
+                        }
+                        if(currentpage < counts) {
+                            //如果当前页码小于总页数,则必须显示下一页链接
+                            pagehtml += `<li><a class="noteSearchByWordPage"  href="javascript:void(0);" p="p=${currentpage+1}">
+                                <span aria-hidden="true" class="glyphicon glyphicon-option-horizontal"></span>
+                                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+                            </a></li>`;
+                        }
+                    }
+                    console.log(pagehtml);
+                    //这个innerHTML的HTML必须为大写！！！！
+                    document.getElementById('pagination').innerHTML = pagehtml;
+                }
+            })()
+        </script>
+    </nav>
+</div>

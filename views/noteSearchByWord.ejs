@@ -1,0 +1,77 @@
+<div id="noteSearchByWord" style="width:100%;">
+	<div  style="padding-top:15px;">
+		<% notes.forEach(function (note, allNotes) { %>
+		<div class="noteBrief" style="border-bottom:1px solid #ccc;">
+			<h4 noteTag="<%= note.tag %>" noteText="<%- note.note %>"><%= note.title%></h4>
+			<div class="removeNote" noteId="<%= note._id%>" align='center' title="扔入废纸篓">
+				<div class="glyphicon glyphicon-trash" style="font-size:15px; margin-top:3px"></div>
+			</div>
+			<p class="info" style="font-size:8px;">
+				<span class="glyphicon glyphicon-time">:<%= note.time.minute%></span> 
+			</p>
+			<div class="note" style="font-size:12px; width: 100%; overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
+				<%- note.note %>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+	<%console.log(total, pagesize, currentpage)%>
+	<%- include components/noteSearchByWordPage {total:total, pagesize:pagesize, currentpage:currentpage}%>
+	<script>
+		//定义删除图标的显示与隐藏功能==============================================
+		$('.noteBrief').mouseenter(function() {
+			$(this).children().eq(1).show();
+		})
+		$('.noteBrief').mouseleave(function() {
+			$(this).children().eq(1).hide();
+		})
+		//定义noteCode区初始显示的文章==============================================
+		$(function() {
+			$('.noteBrief').eq(0).addClass('noteBriefActive');
+			$('#showNoteTitle').html($('.noteBrief').eq(0).children().eq(0).html());
+			$('#showNoteTag').html($('.noteBrief').eq(0).children().eq(0).attr('noteTag'));
+			$('#showNoteText').html($('.noteBrief').eq(0).children().eq(0).attr('noteText'));
+			$('#showNote').fadeIn(300);
+		})
+		//定义点击事件时，noteCode区显示笔记功能======================================
+		$('.noteBrief').click(function() {
+			$('.noteBrief').not(this).removeClass('noteBriefActive');
+			$(this).addClass('noteBriefActive');
+			$('#showNoteTitle').html($(this).children().eq(0).html());
+			$('#showNoteTag').html($(this).children().eq(0).attr('noteTag'));
+			$('#showNoteText').html($(this).children().eq(0).attr('noteText'));
+		})
+		//定义笔记扔入废纸篓的功能====================================================
+		$('.removeNote').click(function() {
+			var obj = $(this).parent();
+			var body= {
+				noteId:$(this).attr('noteId')
+			}
+			$.post('/pullNoteBasket', body, function(data) {
+				if(data.success) {
+					$('#noteFlashInformation').hide().html(data.flashInformation).fadeIn(300).delay(1000).fadeOut(300);
+					obj.fadeOut(300);
+				}
+			});
+		})
+		
+	</script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

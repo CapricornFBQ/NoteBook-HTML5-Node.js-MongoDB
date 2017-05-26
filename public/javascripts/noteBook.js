@@ -37,12 +37,17 @@ $(function() {
     })
     //定义导航栏图标鼠标停留时的动作=================================================================================
     $('.navBarBox').mouseenter(function() {
-        $(this).next().fadeIn(200);
-        $(this).next().next().fadeIn(200);
-    })
+        var enterObj = $(this);
+        showTime = setTimeout(function() {
+            enterObj.next().show();
+            enterObj.next().next().show();
+            clearTimeout(showTime);
+        }, 500);
+    });
     $('.navBarBox').mouseleave(function() {
-        $(this).next().fadeOut(200);
-        $(this).next().next().fadeOut(200);
+        clearTimeout(showTime);
+        $(this).next().hide();
+        $(this).next().next().hide();
     })
     //定义bodyPart部分的高度和宽度(宽度初始默认为0)；
     $('#bodyPart').css({'width':0});

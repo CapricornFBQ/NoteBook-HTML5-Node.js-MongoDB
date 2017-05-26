@@ -39,8 +39,8 @@ $(function() {
     $('.navBarBox').mouseenter(function() {
         var enterObj = $(this);
         showTime = setTimeout(function() {
-            enterObj.next().show();
-            enterObj.next().next().show();
+            enterObj.next().show().delay(1000).fadeOut(300);
+            enterObj.next().next().show().delay(1000).fadeOut(300);
             clearTimeout(showTime);
         }, 500);
     });

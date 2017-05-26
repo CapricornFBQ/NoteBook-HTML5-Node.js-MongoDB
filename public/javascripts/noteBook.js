@@ -45,6 +45,7 @@ $(function() {
         }, 500);
     });
     $('.navBarBox').mouseleave(function() {
+        //该操作同时应该在点击之后被触发
         clearTimeout(showTime);
         $(this).next().hide();
         $(this).next().next().hide();
@@ -93,6 +94,10 @@ $(function() {
     //导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////
     //定义点击navBarNewNote事件，bodyPart动画显示，以及notePart动画缩小===============================================
     $('#navBarNewNote').click(function() {
+        //该操作同时应该在点击之后被触发
+        clearTimeout(showTime);
+        $('.navBarTriangle').hide();
+        $('.navBarTitle').hide();
         $.get('/newNote', function(data) {
             $('#defaultNoteShow').fadeOut(200, function() {
                 $('#showNote').fadeOut();      //有无闪烁的情况，有待后续观察！！！！
@@ -110,8 +115,6 @@ $(function() {
                     $('.navBarBox').fadeOut(300);
                     $('#user').fadeOut(100);
                     $('#NoteBook').fadeOut(300);
-                    $('.navBarTriangle').fadeOut(200);
-                    $('.navBarTitle').fadeOut(200);
                 })
             }else {
                 $('#newNoteCancel').fadeIn(300);
@@ -119,8 +122,6 @@ $(function() {
                 $('.navBarBox').fadeOut(300);
                 $('#user').fadeOut(100);
                 $('#NoteBook').fadeOut(300);
-                $('.navBarTriangle').fadeOut(200);
-                $('.navBarTitle').fadeOut(200);
             }
         })
     })

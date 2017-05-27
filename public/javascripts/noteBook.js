@@ -11,6 +11,12 @@ $(function() {
              $('#reg').fadeIn(500);
         })
     })
+    //定义取消注册动画
+    $('#regSubmitCancel').click(function() {
+        $('#reg').fadeOut(300, function() {
+             $('#login').fadeIn(500);
+        })
+    })
     //定义提示信息的显示时间=======================================================================================
     if($('.flashInformation').attr('success')) {
         $('#flashInformation').fadeIn(1000).delay(3000).fadeOut(1000); 

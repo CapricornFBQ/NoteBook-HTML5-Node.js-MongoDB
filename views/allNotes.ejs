@@ -4,8 +4,8 @@
 			<h2>笔记<small>&nbsp;共<%= total%>篇</small></h2>
 		</div>
 		<% notes.forEach(function (note, allNotes) { %>
-		<div class="noteBrief" style="border-bottom:1px solid #ccc;">
-			<h4 noteTag="<%= note.tag %>" noteText="<%- note.note %>"><%= note.title%></h4>
+		<div class="noteBrief">
+			<h4 noteTag="<%= note.tag %>" noteText="<%- note.note %>" style="overflow: hidden; white-space: nowrap;text-overflow: ellipsis;"><%= note.title%></h4>
 			<div class="removeNote" noteId="<%= note._id%>" align='center' title="扔入废纸篓">
 				<div class="glyphicon glyphicon-trash" style="font-size:15px; margin-top:3px"></div>
 			</div>

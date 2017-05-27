@@ -198,6 +198,7 @@ div {
 }
 .noteBrief {
 	border: 1px solid transparent;
+	border-bottom:1px solid #ccc;
 	border-radius: 4px;
 	outline: none;
 	padding-left:10px; 

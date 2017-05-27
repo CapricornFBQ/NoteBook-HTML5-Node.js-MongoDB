@@ -117,7 +117,7 @@ module.exports = function(app) {
     var currentUser = req.session.user,  //调取session中的用户对象
     tag = req.body.tag,     //在路由加入标签的形式，对存入的文章进行分类
     title = req.body.title, 
-    note = req.body.newNote,
+    newNote = req.body.newNote,
     date = new Date();
     //存储各种时间格式， 方便以后扩展
     var time = {
@@ -132,7 +132,8 @@ module.exports = function(app) {
       time:time,
       title:title, 
       tag:tag, 
-      note:note,
+      note:newNote,
+      plainNote:newNote
     } 
     var noteTag = {
       email:currentUser.email, 

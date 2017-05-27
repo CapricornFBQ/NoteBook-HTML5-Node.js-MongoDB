@@ -36,9 +36,13 @@ $(function() {
     })
     //定义note中显示用户信息的动作==================================================================================
     $('#user').mouseenter(function() {
-        $('#noteUserInformation').fadeIn(200).delay(3000).fadeOut(1000);
+        userInformationshowTime = setTimeout(function() {
+            $('#noteUserInformation').fadeIn(200).delay(1000).fadeOut(1000);
+            clearTimeout(userInformationshowTime);
+        }, 500);
     })
     $('#user').mouseleave(function() {
+        clearTimeout(userInformationshowTime);
         $('#noteUserInformation').fadeOut(200);
     })
     //定义导航栏图标鼠标停留时的动作=================================================================================
@@ -111,6 +115,7 @@ $(function() {
             });
         })
         $('#fullScreen').fadeOut(200); 
+        $('#splitScreen').fadeOut(200); 
         var bodyPartWidth = $('#bodyPart').width();
         $('#notePart').animate({'width':screenWidth}, 300, function() {
             if(bodyPartWidth > 0) {
@@ -173,6 +178,7 @@ $(function() {
     //导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////导航栏search选项功能//////search//
     //定义点击navBarSearch事件，bodyPart动画显示，以及notePart动画缩小================================================
     $('#navBarSearch').click(function() {
+        $('#splitScreen').fadeOut(200); 
         $.get('/noteSearch', function(data) {
             $('#bodyPart').hide().html(data);
             $('#defaultNoteShow').fadeOut(500);
@@ -207,6 +213,7 @@ $(function() {
     //导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签tag选项功能/////导航栏标签//
     //定义点击navBarTag事件，bodyPart动画显示，以及notePart动画缩小===================================================
     $('#navBarTag').click(function() {
+        $('#splitScreen').fadeOut(200); 
         $('#showNote').hide();
         $.get('/noteTag', function(data) {
             $('#bodyPart').hide().html(data);
@@ -253,6 +260,7 @@ $(function() {
     //导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////导航栏allNotes选项功能//////
     //定义点击navBarNote事件，bodyPart动画显示，以及notePart动画缩小,获取全部笔记目录======================================
     $('#navBarNote').click(function() {
+        $('#splitScreen').fadeOut(200); 
         $.get('/allNotes', function(data) {
             $('#defaultNoteShow').fadeOut(300, function() {
                 $('#bodyPart').hide().html(data);
@@ -288,6 +296,7 @@ $(function() {
     //导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////导航栏废纸篓basket功能//////basket////
     //定义点击废纸篓事件，bodyPart动画显示，以及notePart动画缩小==========================================================
     $('#navBarBasket').click(function() {
+        $('#splitScreen').fadeOut(200); 
         $('#showNote').hide();
         $.get('/basket', function(data) {
             $('#bodyPart').hide().html(data);
@@ -330,13 +339,33 @@ $(function() {
             if(bodyPartWidth > 0) {
                 $('#bodyPart').fadeOut(100);
                 $('#bodyPart').animate({'width': 0}, 200, function() {
-                    $('#fullScreen').fadeOut(200); 
+                    $('#fullScreen').fadeOut(100, function() {
+                        $('#splitScreen').fadeIn(200);
+                    }); 
                 })
             }
         })
     })
 
-
+    //定义点击分屏按钮事件，及其动画=====================================================================================
+    $('#splitScreen').click(function() {
+        //每次点击之后，确保导航栏的图标提示消失
+        $('.navBarTriangle').fadeOut(200);
+        $('.navBarTitle').fadeOut(200);
+        if (screenWidth >= 480) {
+            bodyPartWidth = '380px';
+        } else {
+            bodyPartWidth = (screenWidth - 100) + 'px';
+        }
+        $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+            var bodyPartWidth = $('#bodyPart').width();
+            $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
+            $('#splitScreen').fadeOut(100, function() {
+                $('#fullScreen').fadeIn(200);
+            });
+        });
+        $('#bodyPart').fadeIn(500);
+    })
 
 
 })

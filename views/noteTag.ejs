@@ -7,7 +7,7 @@
 		<% tags.forEach(function (tag, allNotes) { %>
 		<div class="noteTagBrief" style="height:24px;">
 			<div style="display:inline; margin:4px 15px;">
-				<span style="font-size:16px;">标签：<%= i%>:</span>
+				<span style="font-size:16px;">标签<%= i%>:</span>
 			</div>
 			<p noteTag="<%= tag.tag %>" style="display:inline; margin:4px; font-size:16px;"><%= tag.tag%></p>
 			<div class="noteTagMenuDown" title="展开笔记" tag="<%= tag.tag%>">

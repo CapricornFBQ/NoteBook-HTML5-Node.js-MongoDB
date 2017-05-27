@@ -65,7 +65,11 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
 });
 
 app.listen(settings.webport, function() {

@@ -14,6 +14,7 @@ var notesSchema = new Schema({
     title: String,
     tag: String,
     note:String,
+    plainNote:String,
 });
 //暴露数据模型
 module.exports = mongoose.model('notes', notesSchema);

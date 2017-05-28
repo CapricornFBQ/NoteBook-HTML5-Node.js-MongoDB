@@ -335,20 +335,32 @@ $(function() {
         $('.navBarTriangle').fadeOut(200);
         $('.navBarTitle').fadeOut(200);
         var bodyPartWidth = $('#bodyPart').width();
-        $('#notePart').animate({'width':(screenWidth - 73) + 'px'}, 500, function() {
-            if(bodyPartWidth > 0) {
-                $('#bodyPart').fadeOut(100);
-                $('#bodyPart').animate({'width': 0}, 200, function() {
-                    if(screenWidth < 768) {
-                        $('#navbar').fadeOut();
+        if(screenWidth < 768) {
+            $('#notePart').animate({'width':screenWidth + 'px'}, 500, function() {
+                if(bodyPartWidth > 0) {
+                    $('#bodyPart').fadeOut(200);
+                    $('#bodyPart').animate({'width': 0}, 200, function() {
+                        $('#navbar').fadeOut(100);
                         $('#navbar').animate({'width': 0}, 300)
-                    }
-                    $('#fullScreen').fadeOut(100, function() {
-                        $('#splitScreen').fadeIn(200);
-                    }); 
-                })
-            }
-        })
+                        $('#fullScreen').fadeOut(100, function() {
+                            $('#splitScreen').fadeIn(200);
+                        }); 
+                    })
+                }
+            })
+        }else {
+            $('#notePart').animate({'width':(screenWidth - 73) + 'px'}, 500, function() {
+                if(bodyPartWidth > 0) {
+                    $('#bodyPart').fadeOut(100);
+                    $('#bodyPart').animate({'width': 0}, 200, function() {
+                
+                        $('#fullScreen').fadeOut(100, function() {
+                            $('#splitScreen').fadeIn(200);
+                        }); 
+                    })
+                }
+            })
+        }
     })
 
     //定义点击分屏按钮事件，及其动画=====================================================================================

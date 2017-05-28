@@ -144,6 +144,9 @@ div {
 }
 #fullScreen {
 	color: #555;
+	font-size: 16px;
+	line-height: 20px;
+	text-align: center;
 	position: fixed;
 	border: 1px solid #555;
 	border-radius: 4px;
@@ -162,6 +165,9 @@ div {
 }
 #splitScreen {
 	color: #555;
+	font-size: 16px;
+	line-height: 20px;
+	text-align: center;
 	position: fixed;
 	border: 1px solid #555;
 	border-radius: 4px;
@@ -170,7 +176,6 @@ div {
 	top: 3px;
 	right: 3px;
 	box-shadow: 0 0 5px #999;
-	font-size: 16px;
 	display: none;
 }
 #splitScreen:hover {
@@ -179,7 +184,6 @@ div {
 	color: #fff;
 }
 #newNoteCancel {
-	font-size: 16px;
 	text-align: center;
 	position: fixed;
 	border: 1px solid #555;

@@ -65,10 +65,6 @@ $(function() {
     var bodyPartWidth = 0;
     //初始notePart的宽度和高度，这里必须是主角
     $('#notePart').css({'width':(screenWidth - 73 - bodyPartWidth) + 'px'});   
-    $('#bodyPart').resize(function() {
-            var bodyPartWidth = $('#bodyPart').width();
-            $('#notePart').css({'width':(screenWidth - 73 - bodyPartWidth) + 'px'});   
-    })
     //noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode///
     //noteCode中默认页面的搜索功能==================================================================================
     $('#notePart #defaultNoteShow #basic-addon2').click(function() {
@@ -359,7 +355,6 @@ $(function() {
                 if(bodyPartWidth > 0) {
                     $('#bodyPart').fadeOut(100);
                     $('#bodyPart').animate({'width': 0}, 200, function() {
-                
                         $('#fullScreen').fadeOut(100, function() {
                             $('#splitScreen').fadeIn(200);
                         }); 

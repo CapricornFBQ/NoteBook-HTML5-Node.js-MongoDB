@@ -72,34 +72,40 @@ $(function() {
     //noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode中默认页面//////noteCode///
     //noteCode中默认页面的搜索功能==================================================================================
     $('#notePart #defaultNoteShow #basic-addon2').click(function() {
-        $.get('/noteSearch', function(data) {
-            $('#bodyPart').hide().html(data);
-            $('#defaultNoteShow').fadeOut(500);
-            //每次点击之后，确保导航栏的图标提示消失
-            $('.navBarTriangle').fadeOut(200);
-            $('.navBarTitle').fadeOut(200);
-            $('#bodyPart').css({'height':screenHeight});
-            if (screenWidth >= 480) {
-                bodyPartWidth = '380px';
-            } else {
-                bodyPartWidth = (screenWidth - 100) + 'px';
-            }
-            $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
-                var bodyPartWidth = $('#bodyPart').width();
-                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
-                $('#fullScreen').fadeIn(300);
-            });
-            $('#bodyPart').fadeIn(function() {
-                $('#noteSearchWord').val($('#defaultNoteShow input').val());
-                var body= {
-                    noteSearchWord : $('#defaultNoteShow input').val(),
+        $('#navbar').animate({'width': '73px'}, 300, function() {
+            $('#navbar').fadeIn();
+            $.get('/noteSearch', function(data) {
+                $('#bodyPart').hide().html(data);
+                $('#splitScreen').fadeOut(100, function() {
+                    $('#fullScreen').fadeIn(200);
+                });
+                $('#defaultNoteShow').fadeOut(500);
+                //每次点击之后，确保导航栏的图标提示消失
+                $('.navBarTriangle').fadeOut(200);
+                $('.navBarTitle').fadeOut(200);
+                $('#bodyPart').css({'height':screenHeight});
+                if (screenWidth >= 480) {
+                    bodyPartWidth = '380px';
+                } else {
+                    bodyPartWidth = (screenWidth - 100) + 'px';
                 }
-                console.log(body);
-                $.get('/noteSearchByWord', body, function(data) {
-                    $('#noteSearchCode').hide().html(data).fadeIn(300);
-                })
-            });
-        })
+                $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+                    var bodyPartWidth = $('#bodyPart').width();
+                    $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
+                    $('#fullScreen').fadeIn(300);
+                });
+                $('#bodyPart').fadeIn(function() {
+                    $('#noteSearchWord').val($('#defaultNoteShow input').val());
+                    var body= {
+                        noteSearchWord : $('#defaultNoteShow input').val(),
+                    }
+                    console.log(body);
+                    $.get('/noteSearchByWord', body, function(data) {
+                        $('#noteSearchCode').hide().html(data).fadeIn(300);
+                    })
+                });
+            })
+        });
     })
     //导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////导航栏newNote功能/////
     //定义点击navBarNewNote事件，bodyPart动画显示，以及notePart动画缩小===============================================

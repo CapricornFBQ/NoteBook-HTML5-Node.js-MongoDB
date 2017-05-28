@@ -339,6 +339,10 @@ $(function() {
             if(bodyPartWidth > 0) {
                 $('#bodyPart').fadeOut(100);
                 $('#bodyPart').animate({'width': 0}, 200, function() {
+                    if(screenWidth < 768) {
+                        $('#navbar').fadeOut();
+                        $('#navbar').animate({'width': 0}, 300)
+                    }
                     $('#fullScreen').fadeOut(100, function() {
                         $('#splitScreen').fadeIn(200);
                     }); 
@@ -357,14 +361,17 @@ $(function() {
         } else {
             bodyPartWidth = (screenWidth - 100) + 'px';
         }
-        $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
-            var bodyPartWidth = $('#bodyPart').width();
-            $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
-            $('#splitScreen').fadeOut(100, function() {
-                $('#fullScreen').fadeIn(200);
+        $('#navbar').animate({'width': '73px'}, 300, function() {
+            $('#navbar').fadeIn();
+            $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+                var bodyPartWidth = $('#bodyPart').width();
+                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
+                $('#splitScreen').fadeOut(100, function() {
+                    $('#fullScreen').fadeIn(200);
+                });
             });
-        });
-        $('#bodyPart').fadeIn(500);
+            $('#bodyPart').fadeIn(500);
+        })
     })
 
 

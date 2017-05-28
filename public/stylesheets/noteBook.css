@@ -236,6 +236,7 @@ div {
 	box-shadow: 0 0 5px #999;
 }
 .noteTagBrief {
+	overflow: hidden;
 	margin-top: 7px;
 	border: 1px solid #666;
 	border-radius: 3px;

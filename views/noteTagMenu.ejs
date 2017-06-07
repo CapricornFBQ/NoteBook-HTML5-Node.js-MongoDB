@@ -1,7 +1,7 @@
 <div id="noteTagMenu" style="width:100%;">
 	<div  style="padding-top:15px;">
 		<% notes.forEach(function (note, allNotes) { %>
-		<div class="noteBrief" style="border-bottom:1px solid #ccc;">
+		<div class="noteBrief">
 			<h4 noteTag="<%= note.tag %>" noteText="<%- note.note %>"><%= note.title%></h4>
 			<div class="removeNote" noteId="<%= note._id%>" align='center' title="扔入废纸篓">
 				<div class="glyphicon glyphicon-trash" style="font-size:15px; margin-top:3px"></div>

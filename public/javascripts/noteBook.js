@@ -374,17 +374,28 @@ $(function() {
         } else {
             bodyPartWidth = (screenWidth - 100) + 'px';
         }
-        $('#navbar').animate({'width': '73px'}, 300, function() {
-            $('#navbar').fadeIn();
+        if(screenWidth < 768) {
+            $('#navbar').animate({'width': '73px'}, 300, function() {
+                $('#navbar').fadeIn();
+                $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
+                    var bodyPartWidth = $('#bodyPart').width();
+                    $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 200);
+                    $('#splitScreen').fadeOut(100, function() {
+                        $('#fullScreen').fadeIn(200);
+                    });
+                });
+                $('#bodyPart').fadeIn(500);
+            })
+        }else{
             $('#bodyPart').animate({'width': bodyPartWidth}, 300, function() {
                 var bodyPartWidth = $('#bodyPart').width();
-                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 100);
+                $('#notePart').animate({'width':(screenWidth - 73 - bodyPartWidth) + 'px'}, 200);
                 $('#splitScreen').fadeOut(100, function() {
                     $('#fullScreen').fadeIn(200);
                 });
             });
-            $('#bodyPart').fadeIn(500);
-        })
+            $('#bodyPart').fadeIn(300);
+        }
     })
 
 

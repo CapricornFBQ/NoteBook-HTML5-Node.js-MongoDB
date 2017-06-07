@@ -4,7 +4,7 @@
 			<h2>废纸篓<small>&nbsp;共<%= total%>篇</small></h2>
 		</div>
 		<% notes.forEach(function (note, allNotes) { %>
-		<div class="noteBrief" style="border-bottom:1px solid #ccc;">
+		<div class="noteBrief">
 			<h4 noteTag="<%= note.tag %>" noteText="<%- note.note %>"><%= note.title%></h4>
 			<div class="completelyRemoveNote" noteId="<%= note._id%>" align='center'>
 				<div style="font-size:15px; line-height: 21px;">彻底删除</div>

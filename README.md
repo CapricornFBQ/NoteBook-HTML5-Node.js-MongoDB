@@ -6,4 +6,4 @@ An NoteBook
 
 图片：https://github.com/CapricornFBQ/NoteBook-picture.git
 
-
+>后台使用pm2 来保持nodejs的稳定运行
